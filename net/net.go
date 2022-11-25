@@ -3,6 +3,7 @@ package net
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"strings"
@@ -16,20 +17,15 @@ type Web struct {
 
 var web Web
 var client = &http.Client{}
-var isUrlValid = false
-var validUrl string
 
 func check(e error) {
 	if e != nil {
-		panic(e)
+		log.Fatal(e)
 	}
 }
 
 func CheckDir(dir, url string, wg *sync.WaitGroup) {
-	if !isUrlValid {
-		validUrl = NormalizeUrl(url)
-	}
-	fullUrl := fmt.Sprintf("%s/%s", validUrl, dir)
+	fullUrl := fmt.Sprintf("%s/%s", url, dir)
 	req, err := http.NewRequest("GET", fullUrl, nil)
 	check(err)
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36")
