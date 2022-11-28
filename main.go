@@ -18,6 +18,8 @@ func main() {
 	if *fileName == "" || strings.ToLower(*url) == "" {
 		log.Fatal("Please specify file and URL!")
 	}
+	fmt.Printf("Host: %s\n", *url)
+	fmt.Printf("Wordlist: %s\n", *fileName)
 	file.OpenFile(*fileName, *url)
 	elapsed := time.Since(start)
 	fmt.Println(elapsed)
