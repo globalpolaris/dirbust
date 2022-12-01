@@ -34,9 +34,11 @@ func CheckDir(dir, url string, wg *sync.WaitGroup) {
 	defer resp.Body.Close()
 	// body, err := io.ReadAll(resp.Body)
 	// log.Println(string(body))
-	web.directory = dir
-	web.statusCode = resp.StatusCode
-	fmt.Printf("%s/%s\t\tStatus: %d\n", url, web.directory, web.statusCode)
+	if resp.StatusCode != 404 {
+		web.directory = dir
+		web.statusCode = resp.StatusCode
+		fmt.Printf("%s/%s\t\tStatus: %d\n", url, web.directory, web.statusCode)
+	}
 	wg.Done()
 
 }
